@@ -93,7 +93,7 @@ $gf-input-padding: $padding-input;
 		padding: $gf-input-padding !important; // need to override GF's "browser" stylesheet
 		width: 100%;
 
-		@include grid-media($tablet-portrait) {
+		@include breakpoint(tablet-portrait) {
 			width: 49%;
 		}
 
@@ -143,7 +143,7 @@ $gf-input-padding: $padding-input;
 	margin-left: 0;
 	width: 100% !important; // overrides GF !important
 
-	@include grid-media($tablet-portrait) {
+	@include breakpoint(tablet-portrait) {
 		width: 49% !important;
 	}
 } // .gform_wrapper .gform_body .gform_fields .gfield select, .gform_wrapper.gf_browser_chrome .gform_body .gform_fields .gfield select
@@ -165,10 +165,12 @@ $gf-input-padding: $padding-input;
 
 	// Default state of icon for select
 	.chosen-single div b {
-		@include position(absolute, 40% rem(11) null null);
-		@include triangle(12px, $color-silver, down); // adjust size and color
+		@include css-triangle(12px, $color-silver, down); // adjust size and color
 
 		background: none; // hide the default chosen background
+		position: absolute;
+		right: rem(11);
+		top: 40%;
 	} // .chosen-single div b
 
 	// Selections drop-down
@@ -193,7 +195,7 @@ $gf-input-padding: $padding-input;
 		} // .chosen-single
 
 		.chosen-single div b {
-			@include triangle(12px, $color-silver, up); // adjust size and color for active icon
+			@include css-triangle(12px, $color-silver, up); // adjust size and color for active icon
 
 			border: none; // hiding the previous triangle (border)
 		} // .chosen-single div b
@@ -219,7 +221,7 @@ $gf-input-padding: $padding-input;
 		padding: $gf-input-padding;
 		width: 100%;
 
-		@include grid-media($tablet-portrait) {
+		@include breakpoint(tablet-portrait) {
 			width: 49%;
 		}
 	} // input[type="text"], input[type="url"], input[type="email"], input[type="tel"], input[type="number"], input[type="password"], input[type="file"], textarea
@@ -254,12 +256,12 @@ $gf-input-padding: $padding-input;
 		input[type='password'],
 		input[type='file'] {
 
-			@include grid-media($tablet-portrait) {
+			@include breakpoint(tablet-portrait) {
 				width: 100%;
 			}
 		} // input[type="text"], input[type="url"], input[type="email"], input[type="tel"], input[type="number"], input[type="password"], input[type="file"]
 
-		@include grid-media($tablet-portrait) {
+		@include breakpoint(tablet-portrait) {
 			width: 49%;
 		}
 	} // .gf_left_half, .gf_right_half
@@ -267,7 +269,7 @@ $gf-input-padding: $padding-input;
 	// Target just left column on two-column row
 	.gf_left_half {
 
-		@include grid-media($tablet-portrait) {
+		@include breakpoint(tablet-portrait) {
 			margin-right: 2%;
 		}
 	} // .gf_left_half

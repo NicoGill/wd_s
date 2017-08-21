@@ -8,11 +8,13 @@
 
 	// Transparent overlay.
 	&::after {
-		@include position(absolute, 0 0 null null);
-		@include size(100%);
-
 		background-color: rgba($color-black, 0.5);
 		content: '';
+		height: 100%;
+		position: absolute;
+		right: 0;
+		top: 0;
+		width: 100%;
 		z-index: 2;
 	} // &:after
 
@@ -32,7 +34,7 @@
 
 	// Add padding to description.
 	&-description {
-		padding-bottom: $gutter * 2;
+		padding-bottom: $global-padding * 2;
 	} // .hero-description
 } // .hero
 
@@ -52,7 +54,7 @@
 	// IE11 doesn't do centering with just a min-height,
 	// need to set a specific height instead.
 	.hero-content {
-		@include grid-media($tablet-portrait) {
+		@include breakpoint(tablet-portrait) {
 			height: rem(500); // height of hero.
 		}
 	} // .hero-content

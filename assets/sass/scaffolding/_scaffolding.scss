@@ -6,15 +6,15 @@
 // Scaffolding defaults
 //-----------------------------------------
 .scaffolding-document {
-	margin-bottom: $gutter * 2;
+	margin-bottom: $global-margin * 2;
 
 	// The section <header>
 	&-header {
 		border-bottom: rem(1) solid gray;
 		display: flex;
 		justify-content: space-between;
-		margin-bottom: $gutter;
-		padding-bottom: $gutter;
+		margin-bottom: $global-margin;
+		padding-bottom: $global-padding;
 
 		// The title.
 		h2 {
@@ -35,7 +35,7 @@
 		// Reset.
 		h4,
 		p {
-			margin: $gutter 0;
+			margin: $global-margin 0;
 		} // h4, p
 
 		// The <pre> container.
@@ -43,8 +43,8 @@
 			background-color: white;
 			border: rem(1) solid lightgray;
 			color: gray;
-			margin: 0 0 $gutter;
-			padding: $gutter;
+			margin: 0 0 $global-margin;
+			padding: $global-padding;
 		} // pre
 
 		// The <code> container.
@@ -76,14 +76,13 @@
 
 	// Each swatch.
 	.swatch {
-		@include size(100% rem(125));
-		@include grid-column(3);
-
-		border: 1px solid black;
 		border-radius: rem(5);
+		border: 1px solid black;
+		height: rem(125);
 		margin-bottom: $gutter;
 		position: relative;
 		text-align: center;
+		width: 100%;
 
 		// The swatch <header>
 		& header {
@@ -93,13 +92,13 @@
 
 		// The swatch <footer>
 		& footer {
-			@include position(absolute, null null 0 null);
-
 			background-color: white;
 			border-bottom-left-radius: rem(5);
 			border-bottom-right-radius: rem(5);
+			bottom: 0;
 			font-size: rem(12);
 			padding: rem(10);
+			position: absolute;
 			width: 100%;
 		} // footer
 	} // .swatch

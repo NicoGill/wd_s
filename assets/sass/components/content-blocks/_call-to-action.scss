@@ -5,10 +5,10 @@
 
 	// Set up structure.
 	.row {
-		padding: $gutter;
+		padding: $global-padding;
 		text-align: center;
 
-		@include grid-media($tablet-portrait) {
+		@include breakpoint(tablet-portrait) {
 			align-items: center;
 			display: flex;
 			justify-content: center;
