@@ -1,46 +1,83 @@
 // Require our dependencies
-const autoprefixer = require( 'autoprefixer' );
-const babel = require( 'gulp-babel' );
-const bourbon = require( 'bourbon' ).includePaths;
-const browserSync = require( 'browser-sync' );
-const cheerio = require( 'gulp-cheerio' );
-const concat = require( 'gulp-concat' );
-const cssnano = require( 'gulp-cssnano' );
-const del = require( 'del' );
-const eslint = require( 'gulp-eslint' );
-const fs = require( 'fs' );
-const gulp = require( 'gulp' );
-const gutil = require( 'gulp-util' );
-const imagemin = require( 'gulp-imagemin' );
-const mqpacker = require( 'css-mqpacker' );
-const neat = require( 'bourbon-neat' ).includePaths;
-const notify = require( 'gulp-notify' );
-const plumber = require( 'gulp-plumber' );
-const postcss = require( 'gulp-postcss' );
-const reload = browserSync.reload;
-const rename = require( 'gulp-rename' );
-const sass = require( 'gulp-sass' );
-const sassdoc = require( 'sassdoc' );
-const sassLint = require( 'gulp-sass-lint' );
-const sort = require( 'gulp-sort' );
-const sourcemaps = require( 'gulp-sourcemaps' );
-const spritesmith = require( 'gulp.spritesmith' );
-const svgmin = require( 'gulp-svgmin' );
-const svgstore = require( 'gulp-svgstore' );
-const uglify = require( 'gulp-uglify' );
-const wpPot = require( 'gulp-wp-pot' );
+const autoprefixer = require( 'autoprefixer' ),
+	babel = require( 'gulp-babel' ),
+	browserSync = require( 'browser-sync' ),
+	cheerio = require( 'gulp-cheerio' ),
+	concat = require( 'gulp-concat' ),
+	cssnano = require( 'gulp-cssnano' ),
+	del = require( 'del' ),
+	gulp = require( 'gulp' ),
+	gutil = require( 'gulp-util' ),
+	imagemin = require( 'gulp-imagemin' ),
+	mqpacker = require( 'css-mqpacker' ),
+	notify = require( 'gulp-notify' ),
+	plumber = require( 'gulp-plumber' ),
+	postcss = require( 'gulp-postcss' ),
+	reload = browserSync.reload,
+	rename = require( 'gulp-rename' ),
+	sass = require( 'gulp-sass' ),
+	sort = require( 'gulp-sort' ),
+	sourcemaps = require( 'gulp-sourcemaps' ),
+	spritesmith = require( 'gulp.spritesmith' ),
+	svgmin = require( 'gulp-svgmin' ),
+	svgstore = require( 'gulp-svgstore' ),
+	uglify = require( 'gulp-uglify' ),
+	wpPot = require( 'gulp-wp-pot' ),
 
-// Set assets paths.
-const paths = {
-	'css': [ './*.css', '!*.min.css' ],
-	'icons': 'assets/images/svg-icons/*.svg',
-	'images': [ 'assets/images/*', '!assets/images/*.svg' ],
-	'php': [ './*.php', './**/*.php' ],
-	'sass': 'assets/sass/**/*.scss',
-	'concat_scripts': 'assets/scripts/concat/*.js',
-	'scripts': [ 'assets/scripts/*.js', '!assets/scripts/*.min.js', '!assets/scripts/customizer.js' ],
-	'sprites': 'assets/images/sprites/*.png'
-};
+	// Set asset paths.
+	paths = {
+		'concat_scripts': 'assets/scripts/concat/*.js',
+		'css': [ './*.css', '!*.min.css' ],
+		'foundationJS': 'node_modules/foundation-sites/js/',
+		'icons': 'assets/images/svg-icons/*.svg',
+		'images': [ 'assets/images/*', '!assets/images/*.svg' ],
+		'php': [ './*.php', './**/*.php' ],
+		'sass': 'assets/sass/**/*.scss',
+		'scripts': [ 'assets/scripts/*.js', '!assets/scripts/*.min.js', '!assets/scripts/customizer.js' ],
+		'sprites': 'assets/images/sprites/*.png'
+	},
+
+	// Set theme Javascript directories.
+	themeJavascriptDir = [
+
+		// Required Foundation components.
+		paths.foundationJS + 'foundation.core.js',
+		paths.foundationJS + 'foundation.util.mediaQuery.js',
+
+		// Optional Foundation components.
+		// To enable, just uncomment and re-run `gulp scripts`.
+
+		// paths.foundationJS + 'foundation.abide.js',
+		// paths.foundationJS + 'foundation.accordion.js',
+		paths.foundationJS + 'foundation.accordionMenu.js',
+		// paths.foundationJS + 'foundation.drilldown.js',
+		// paths.foundationJS + 'foundation.dropdown.js',
+		paths.foundationJS + 'foundation.dropdownMenu.js',
+		// paths.foundationJS + 'foundation.equalizer.js',
+		// paths.foundationJS + 'foundation.interchange.js',
+		// paths.foundationJS + 'foundation.magellan.js',
+		paths.foundationJS + 'foundation.offcanvas.js',
+		// paths.foundationJS + 'foundation.orbit.js',
+		paths.foundationJS + 'foundation.responsiveMenu.js',
+		paths.foundationJS + 'foundation.responsiveToggle.js',
+		// paths.foundationJS + 'foundation.reveal.js',
+		// paths.foundationJS + 'foundation.slider.js',
+		// paths.foundationJS + 'foundation.sticky.js',
+		// paths.foundationJS + 'foundation.tabs.js',
+		// paths.foundationJS + 'foundation.toggler.js',
+		// paths.foundationJS + 'foundation.tooltip.js',
+		paths.foundationJS + 'foundation.util.box.js',
+		paths.foundationJS + 'foundation.util.keyboard.js',
+		paths.foundationJS + 'foundation.util.motion.js',
+		paths.foundationJS + 'foundation.util.nest.js',
+		// paths.foundationJS + 'foundation.util.timerAndImageLoader.js',
+		// paths.foundationJS + 'foundation.util.touch.js',
+		paths.foundationJS + 'foundation.util.triggers.js',
+		// paths.foundationJS + 'foundation.zf.responsiveAccordionTabs.js',
+
+		// Required theme scripts.
+		paths.concat_scripts
+	];
 
 /**
  * Handle errors and alert the user.
@@ -86,7 +123,6 @@ gulp.task( 'postcss', [ 'clean:styles' ], () =>
 
 			// Compile Sass using LibSass.
 			.pipe( sass({
-				'includePaths': [].concat( bourbon, neat ),
 				'errLogToConsole': true,
 				'outputStyle': 'expanded' // Options: nested, expanded, compact, compressed
 			}) )
@@ -282,43 +318,6 @@ gulp.task( 'wp-pot', [ 'clean:pot' ], () =>
 );
 
 /**
- * Sass linting.
- *
- * https://www.npmjs.com/package/sass-lint
- */
-gulp.task( 'sass:lint', () =>
-	gulp.src([
-		'assets/sass/**/*.scss',
-		'!assets/sass/base/_normalize.scss',
-		'!assets/sass/base/_sprites.scss',
-		'!node_modules/**'
-	])
-		.pipe( sassLint() )
-		.pipe( sassLint.format() )
-		.pipe( sassLint.failOnError() )
-);
-
-/**
- * JavaScript linting.
- *
- * https://www.npmjs.com/package/gulp-eslint
- */
-gulp.task( 'js:lint', () =>
-	gulp.src([
-		'assets/scripts/concat/*.js',
-		'assets/scripts/*.js',
-		'!assets/scripts/project.js',
-		'!assets/scripts/*.min.js',
-		'!Gruntfile.js',
-		'!Gulpfile.js',
-		'!node_modules/**'
-	])
-		.pipe( eslint() )
-		.pipe( eslint.format() )
-		.pipe( eslint.failAfterError() )
-);
-
-/**
  * Sass docs.
  *
  * http://sassdoc.com/getting-started/
@@ -368,6 +367,5 @@ gulp.task( 'icons', [ 'svg' ] );
 gulp.task( 'scripts', [ 'uglify' ] );
 gulp.task( 'styles', [ 'cssnano' ] );
 gulp.task( 'sprites', [ 'spritesmith' ] );
-gulp.task( 'lint', [ 'sass:lint', 'js:lint' ] );
 gulp.task( 'docs', ['sassdoc'] );
-gulp.task( 'default', [ 'sprites', 'i18n', 'icons', 'styles', 'scripts', 'imagemin'] );
+gulp.task( 'default', [ 'sprites', 'i18n', 'icons', 'styles', 'scripts', 'imagemin', 'docs' ] );
