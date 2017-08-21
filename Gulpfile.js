@@ -254,7 +254,7 @@ gulp.task( 'spritesmith', () =>
  * https://www.npmjs.com/package/gulp-sourcemaps
  */
 gulp.task( 'concat', () =>
-	gulp.src( paths.concat_scripts )
+	gulp.src( themeJavascriptDir )
 
 		// Deal with errors.
 		.pipe( plumber(
@@ -343,7 +343,7 @@ gulp.task( 'watch', function() {
 	browserSync({
 		'open': false,             // Open project in a new tab?
 		'injectChanges': true,     // Auto inject changes instead of full reload.
-		'proxy': '_s.dev',         // Use http://_s.dev:3000 to use BrowserSync.
+		'proxy': 'testing.dev',         // Use http://_s.dev:3000 to use BrowserSync.
 		'watchOptions': {
 			'debounceDelay': 1000  // Wait 1 second before injecting.
 		}
