@@ -26,9 +26,9 @@
 <div id="page" class="site">
 	<a class="skip-link screen-reader-text" href="#main"><?php esc_html_e( 'Skip to content', '_s' ); ?></a>
 
-	<header class="site-header">
+	<header class="site-header grid-x">
 
-		<div class="site-branding">
+		<div class="medium-6 cell site-branding">
 
 			<?php the_custom_logo(); ?>
 
@@ -46,11 +46,13 @@
 			<?php endif; ?>
 		</div><!-- .site-branding -->
 
-		<button type="button" class="off-canvas-open" aria-expanded="false" aria-label="<?php esc_html_e( 'Open Menu', '_s' ); ?>">
-			<span class="hamburger"></span>
-		</button>
+		<nav id="site-navigation" class="medium-6 cell main-navigation">
 
-		<nav id="site-navigation" class="main-navigation">
+			<span class="cell small-6 medium-10 hamburger text-right" data-responsive-toggle="main-site-navigation" data-hide-for="large">
+				<button class="hamburger-icon" type="button" data-toggle="off-canvas-menu"></button>
+				<div class="title-bar-title show-for-sr"><?php esc_html_e( 'Menu', '_s' ); ?></div>
+			</span>
+
 			<?php
 				wp_nav_menu( array(
 					'theme_location' => 'primary',
